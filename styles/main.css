@@ -21,6 +21,7 @@ body {
     border: 1rem;
     border-style: double;
     border-color: black;
+    overflow-y: scroll;
 }
 
 .upgrade-element {
