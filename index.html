@@ -15,7 +15,7 @@
     <input type="button" onclick='progress.load()' value="Load">
     <input type="button" onclick='progress.reset()' value="Reset">
     <input type="button" onclick='progress.import(prompt("Enter save data."))' value="Import">
-    <input type="button" onclick='alert(progress.export())' value="Export">
+    <input type="button" onclick='prompt("Copy text below!", progress.export())' value="Export">
 
     <input id="click" type="button" onclick='handleClick()' value="Click">
     </div>
