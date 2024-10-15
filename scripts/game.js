@@ -180,14 +180,14 @@ const ALL_DUST_UPGRADES = [
 ]
 
 function handleClick() {
-    points = points + (clickPower * multiplier)
-    totalPoints = totalPoints + (clickPower * multiplier)
+    points = Math.round(points + (clickPower * multiplier))
+    totalPoints = Math.round(totalPoints + (clickPower * multiplier))
     updatePoints()
 }
 
 function handleAutoClick() {
-    points = points + (autoPower * multiplier)
-    totalPoints = totalPoints + (autoPower * multiplier)
+    points = Math.round(points + (autoPower * multiplier))
+    totalPoints = Math.round(totalPoints + (autoPower * multiplier))
     updatePoints()
 }
 
