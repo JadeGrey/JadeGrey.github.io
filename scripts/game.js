@@ -295,12 +295,12 @@ function loadUpgrades() {
 }
 
 function updatePoints() {
-    document.getElementById("points").innerHTML = "Points: " + points
+    document.getElementById("points").innerHTML = "Points: " + Math.round(points)
 }
 
 function updatePower() {
-    document.getElementById("clickPower").innerHTML = "Click Power: " + clickPower
-    document.getElementById("autoPower").innerHTML = "Auto Power: " + autoPower
+    document.getElementById("clickPower").innerHTML = "Click Power: " + Math.round(clickPower * multiplier)
+    document.getElementById("autoPower").innerHTML = "Auto Power: " + Math.round(autoPower * multiplier)
 }
 
 function addCountUpgrade(upgrade, count) {
