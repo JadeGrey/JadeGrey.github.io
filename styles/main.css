@@ -2,3 +2,13 @@ html {
     height: 100%;
     width: 100%;
   }
+
+.upgrades-container {
+    border: 1rem;
+    border-color: black;
+    padding: 2rem;
+}
+
+.btn-menu {
+    padding: 1rem;
+}
