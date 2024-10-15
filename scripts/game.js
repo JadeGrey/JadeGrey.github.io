@@ -266,7 +266,7 @@ function accend() {
     if (canAccend()) {
         dust = dust + calcDust()
         totalPoints = totalPoints - (calcDust() * 1000000000)
-        p = new Progress(1, 0, totalPoints, 0, dust/10, [], 0)
+        p = new Progress(1, 0, totalPoints, 0, multiplier + (dust/10), [], 0)
         progress.import(btoa(JSON.stringify(p)))
     }
 }
