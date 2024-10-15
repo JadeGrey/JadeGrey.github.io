@@ -257,12 +257,6 @@ function handleSecond() {
     }
 }
 
-function importHandler() {
-    data = prompt("Enter save data here.")
-    progress.import(atob(JSON.parse(data)))
-    alert("Successfully imported!")
-}
-
 function calcDust() {
     conv = Math.floor(totalPoints / 1000000000)
     return conv
