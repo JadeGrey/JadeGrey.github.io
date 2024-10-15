@@ -258,14 +258,14 @@ function handleSecond() {
 }
 
 function calcDust() {
-    conv = Math.floor(totalPoints / 1000000000)
+    conv = Math.floor(totalPoints / 100000000)
     return conv
 }
 
 function accend() {
     if (canAccend()) {
         dust = dust + calcDust()
-        totalPoints = totalPoints - (calcDust() * 1000000000)
+        totalPoints = totalPoints - (calcDust() * 100000000)
         p = new Progress(1, 0, totalPoints, 0, multiplier + (dust/10), [], 0)
         progress.import(btoa(JSON.stringify(p)))
     }
