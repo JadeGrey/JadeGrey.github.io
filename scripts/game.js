@@ -251,9 +251,9 @@ function sleep(ms) {
 function handleSecond() {
     handleAutoClick()
     progress.save()
-    if (canAccend()) {
+    if (canAccend() && !document.getElementById('Accend')) {
         buttons = document.getElementById("buttons")
-        buttons.innerHTML += '<input type="button" onclick="accend()" value="Accend">'
+        buttons.innerHTML += '<input type="button" onclick="accend()" value="Accend" id="Accend">'
     }
 }
 
