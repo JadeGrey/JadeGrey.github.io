@@ -140,7 +140,7 @@ const FPS = 30
 const CLICK_BASE_COST = 50.0;
 const AUTO_BASE_COST = 75.0;
 const DISCOUNT_PER_TIER = 0.02;
-const POWER_COST_MULTIPLIER = 5.0;
+const POWER_COST_MULTIPLIER = 2.0;
 const ALL_UPGRADES = [
     new Upgrade("Baby Goose", 1, 1, false),
     new Upgrade("Goose Pen", 1, 1, true),
@@ -243,6 +243,7 @@ function sleep(ms) {
 
 function handleSecond() {
     handleAutoClick()
+    progress.save()
     if (canAccend()) {
         buttons = document.getElementById("buttons")
         buttons.innerHTML += '<input type="button" onclick="accend()" value="Accend">'
