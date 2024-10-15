@@ -4,9 +4,13 @@ html {
   }
 
 .upgrades-container {
+    padding: 2rem;
+}
+
+.upgrade-element {
     border: 1rem;
     border-color: black;
-    padding: 2rem;
+    margin: auto;
 }
 
 .btn-menu {
