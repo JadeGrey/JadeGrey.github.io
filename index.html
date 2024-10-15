@@ -11,9 +11,12 @@
     <p id="clickPower">Click Power: N</p>
     <p id="autoPower">Auto Power: N</p>
     <div id="buttons">
-    <input type="button" onclick='progress.save()' value="Save"'>
-    <input type="button" onclick='progress.load()' value="Load"'>
-    <input type="button" onclick='progress.reset()' value="Reset"'>
+    <input type="button" onclick='progress.save()' value="Save">
+    <input type="button" onclick='progress.load()' value="Load">
+    <input type="button" onclick='progress.reset()' value="Reset">
+    <input type="button" onclick="importHandler()" value="Import">
+    <input type="button" onclick="alert(progress.export())" value="export">
+
     <input id="click" type="button" onclick='handleClick()' value="Click">
     </div>
     <div id="upgrades"></div>

@@ -134,6 +134,13 @@ class Progress {
             this.dump()
         }
     }
+
+    export(sync = true) {
+        if (sync) {
+            this.sync()
+        }
+        return btoa(JSON.stringify(this))
+    }
 }
 
 const FPS = 30
@@ -250,15 +257,21 @@ function handleSecond() {
     }
 }
 
+function importHandler() {
+    data = prompt("Enter save data here.")
+    progress.import(atob(JSON.parse(data)))
+    alert("Successfully imported!")
+}
+
 function calcDust() {
-    conv = Math.floor(totalPoints / 1000000)
+    conv = Math.floor(totalPoints / 1000000000)
     return conv
 }
 
 function accend() {
     if (canAccend()) {
         dust = dust + calcDust()
-        totalPoints = totalPoints - (calcDust() * 1000000)
+        totalPoints = totalPoints - (calcDust() * 1000000000)
         p = new Progress(1, 0, totalPoints, 0, 1, [], dust)
         progress.import(btoa(JSON.stringify(p)))
     }
