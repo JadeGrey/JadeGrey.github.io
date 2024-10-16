@@ -198,6 +198,9 @@ function modifierHandler(modifier, count) {
 }
 
 function calcCost(upgrade, amount = 1) {
+    if (upgradeExists(upgrade)) {
+        upgrade = upgradeExists(upgrade)
+    }
     if (upgrade.auto) {
         cost = ((AUTO_BASE_COST * upgrade.power) * amount * (1 - DISCOUNT_PER_TIER * (upgrade.tier - 1))) + Math.pow(POWER_COST_MULTIPLIER, (upgrade.count * amount))
     } else {
@@ -217,9 +220,6 @@ function upgradeExists(upgrade) {
 }
 
 function buyUpgrade(upgrade, multiplier) {
-    if (upgradeExists(upgrade)) {
-        upgrade = upgradeExists(upgrade)
-    }
     cost = calcCost(upgrade, multiplier)
 
     if (points >= cost) {
@@ -292,15 +292,7 @@ function loadUpgrades() {
         _x = false;
         upgrade = document.createElement("div")
         upgrade.id = "upgrade" + i
-        for (j = 0; j < cur_upgrades.length; j++) {
-            if (cur_upgrades[j].name == ALL_UPGRADES[i].name) {
-                upgrade.innerHTML = "<p>" + cur_upgrades[j].name + "</p><p>Cost: " + calcCost(cur_upgrades[j]) + "</p>"
-                _x = true
-            }
-        }
-        if (!_x) {
-            upgrade.innerHTML = "<p>" + ALL_UPGRADES[i].name + "</p><p>Cost: " + calcCost(ALL_UPGRADES[i]) + "</p>"
-        }
+        upgrade.innerHTML = "<p>" + ALL_UPGRADES[i].name + "</p><p>Cost: " + calcCost(ALL_UPGRADES[i]) + "</p>"
         upgrade.onclick = upgradeCallback(i);
         upgrades.appendChild(upgrade)
     }
@@ -327,9 +319,6 @@ function addCountUpgrade(upgrade, count) {
 
 function upgradeCallback(i) {
     upgrade = ALL_UPGRADES[i]
-    if (upgradeExists(upgrade)) {
-        upgrade = upgradeExists(upgrade)
-    }
     return function() {
         buyUpgrade(upgrade, 1)
     }
