@@ -210,15 +210,17 @@ function calcCost(upgrade, amount = 1) {
 function upgradeExists(upgrade) {
     for (i = 0; i < cur_upgrades.length; i++) {
         if (upgrade == cur_upgrades[i]) {
-            return true
+            return cur_upgrades[i]
         }
     }
 
-    return false
+    return upgrade
 }
 
 function buyUpgrade(upgrade, multiplier) {
+    upgrade = upgradeExists(upgrade)
     cost = calcCost(upgrade, multiplier)
+
     if (points >= cost) {
                
         for (i = 0; i < multiplier; i++) {
@@ -226,7 +228,6 @@ function buyUpgrade(upgrade, multiplier) {
             if (upgradeExists(upgrade)) {
                 addCountUpgrade(upgrade)
             } else {
-                console.log('app')
                 cur_upgrades.push(upgrade)
             }
             if (upgrade.auto) {
