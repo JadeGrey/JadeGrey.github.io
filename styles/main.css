@@ -35,7 +35,7 @@ body {
     overflow-y: scroll;
 }
 
-.upgrade-element {
+.upgrades-container div {
     max-height: 15%;
     border: 0;
     border-bottom: 0.3vw;
@@ -44,11 +44,11 @@ body {
     margin: auto;
 }
 
-.upgrade-element:last-child {
+.upgrades-container div:last-child {
     border-bottom: 0;
 }
 
-.upgrade-element p {
+.upgrades-container p {
     font-size: 15px;
     font-size: 2vw;
 }
