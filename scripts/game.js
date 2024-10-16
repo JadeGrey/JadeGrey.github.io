@@ -326,8 +326,12 @@ function addCountUpgrade(upgrade, count) {
 }
 
 function upgradeCallback(i) {
+    upgrade = ALL_UPGRADES[i]
+    if (upgradeExists(upgrade)) {
+        upgrade = upgradeExists(upgrade)
+    }
     return function() {
-        buyUpgrade(ALL_UPGRADES[i], 1)
+        buyUpgrade(upgrade, 1)
     }
 }
 
