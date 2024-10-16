@@ -192,30 +192,31 @@ function handleAutoClick() {
 }
 
 function modifierHandler(modifier, count) {
-    if (modifier == 'multiplier') {
+    if (modifier === 'multiplier') {
         return multiplier += 0.1 * count
     }
 }
 
 function calcCost(upgrade, amount = 1) {
+    var cost;
     if (upgradeExists(upgrade)) {
         upgrade = upgradeExists(upgrade)
     }
     if (upgrade.auto) {
-        var cost = ((AUTO_BASE_COST * upgrade.power) * amount * (1 - DISCOUNT_PER_TIER * (upgrade.tier - 1))) + Math.pow(POWER_COST_MULTIPLIER, (upgrade.count * amount))
+        cost = ((AUTO_BASE_COST * upgrade.power) * amount * (1 - DISCOUNT_PER_TIER * (upgrade.tier - 1))) + Math.pow(POWER_COST_MULTIPLIER, (upgrade.count * amount))
     } else {
-        var cost = ((CLICK_BASE_COST * upgrade.power) * amount * (1 - DISCOUNT_PER_TIER * (upgrade.tier - 1))) + Math.pow(POWER_COST_MULTIPLIER, (upgrade.count * amount))
+        cost = ((CLICK_BASE_COST * upgrade.power) * amount * (1 - DISCOUNT_PER_TIER * (upgrade.tier - 1))) + Math.pow(POWER_COST_MULTIPLIER, (upgrade.count * amount))
     }
 
     return Math.ceil(cost)
 }   
 
 function upgradeExists(upgrade) {
-    for (i = 0; i < cur_upgrades.length; i++) {
-        if (upgrade.name == cur_upgrades[i].name) {
-            return cur_upgrades[i]
+    cur_upgrades.forEach((_upgrade) => {
+        if (upgrade.name === _upgrade.name) {
+            return _upgrade
         }
-    }
+    })
     return false
 }
 
@@ -288,7 +289,7 @@ function loadUpgrades() {
     var upgrades = document.getElementById("upgrades")
     upgrades.innerHTML = '';
     for (i = 0; i < ALL_UPGRADES.length; i++) {
-        let upgrade = document.createElement("div")
+        var upgrade = document.createElement("div")
         upgrade.id = "upgrade" + i
         upgrade.innerHTML = "<p>" + ALL_UPGRADES[i].name + "</p><p>Cost: " + calcCost(ALL_UPGRADES[i]) + "</p>"
         upgrade.onclick = upgradeCallback(i);
@@ -309,7 +310,7 @@ function updatePower() {
 
 function addCountUpgrade(upgrade, count) {
     for (i = 0; i < cur_upgrades.length; i++) {
-        if (upgrade == cur_upgrades[i]) {
+        if (upgrade === cur_upgrades[i]) {
             cur_upgrades[i].addCount(count)
         }
     }
@@ -326,7 +327,7 @@ function canAccend() {
         return true
     }
     for (i = 0; i < cur_upgrades.length; i++) {
-        if (cur_upgrades[i].name == "Goose Empire") {
+        if (cur_upgrades[i].name === "Goose Empire") {
             return true
         }
     }
