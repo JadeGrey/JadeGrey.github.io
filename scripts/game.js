@@ -278,14 +278,14 @@ function main() {
     if (localStorage.getItem(btoa('saveData'))) {
         progress.load()
     }
-    setInterval(handleSecond, 1000)
     updatePoints()
     updatePower()
     loadUpgrades()
+    setInterval(handleSecond, 1000)
 }
 
 function loadUpgrades() {
-    upgrades = document.getElementById("upgrades")
+    let upgrades = document.getElementById("upgrades")
     upgrades.innerHTML = '';
     for (i = 0; i < ALL_UPGRADES.length; i++) {
         upgrade = document.createElement("div")
