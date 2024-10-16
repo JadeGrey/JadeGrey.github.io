@@ -199,9 +199,9 @@ function modifierHandler(modifier, count) {
 
 function calcCost(upgrade, amount = 1) {
     if (upgrade.auto) {
-        cost = ((AUTO_BASE_COST * upgrade.power) * amount * (1 - DISCOUNT_PER_TIER * (upgrade.tier - 1))) + (POWER_COST_MULTIPLIER ** (upgrade.count * amount))
+        cost = ((AUTO_BASE_COST * upgrade.power) * amount * (1 - DISCOUNT_PER_TIER * (upgrade.tier - 1))) + Math.pow(POWER_COST_MULTIPLIER, (upgrade.count * amount))
     } else {
-        cost = ((CLICK_BASE_COST * upgrade.power) * amount * (1 - DISCOUNT_PER_TIER * (upgrade.tier - 1))) + (POWER_COST_MULTIPLIER ** (upgrade.count * amount))
+        cost = ((CLICK_BASE_COST * upgrade.power) * amount * (1 - DISCOUNT_PER_TIER * (upgrade.tier - 1))) + Math.pow(POWER_COST_MULTIPLIER, (upgrade.count * amount))
     }
 
     return Math.round(cost)
@@ -287,6 +287,7 @@ function loadUpgrades() {
     upgrades = document.getElementById("upgrades")
     upgrades.innerHTML = '';
     for (i = 0; i < ALL_UPGRADES.length; i++) {
+        _x = false;
         upgrade = document.createElement("div")
         upgrade.id = "upgrade" + i
         for (j = 0; j < cur_upgrades.length; j++) {
