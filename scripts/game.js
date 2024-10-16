@@ -147,7 +147,7 @@ const FPS = 30
 const CLICK_BASE_COST = 15.0;
 const AUTO_BASE_COST = 20.0;
 const DISCOUNT_PER_TIER = 0.02;
-const POWER_COST_MULTIPLIER = 1.15;
+const POWER_COST_MULTIPLIER = 1.05;
 const ALL_UPGRADES = [
     new Upgrade("Baby Goose", 1, 1, false),
     new Upgrade("Goose Pen", 1, 1, true),
@@ -198,14 +198,13 @@ function modifierHandler(modifier, count) {
 }
 
 function calcCost(upgrade, amount = 1) {
-    var cost;
     if (upgradeExists(upgrade)) {
         upgrade = upgradeExists(upgrade)
     }
     if (upgrade.auto) {
-        cost = ((AUTO_BASE_COST * upgrade.power) * amount * (1 - DISCOUNT_PER_TIER * (upgrade.tier - 1))) + Math.pow(POWER_COST_MULTIPLIER, (upgrade.count * amount))
+        cost = (POWER_COST_MULTIPLIER * (upgrade.count + amount)) * ((AUTO_BASE_COST * upgrade.power) * amount * (1 - DISCOUNT_PER_TIER * (upgrade.tier - 1)))
     } else {
-        cost = ((CLICK_BASE_COST * upgrade.power) * amount * (1 - DISCOUNT_PER_TIER * (upgrade.tier - 1))) + Math.pow(POWER_COST_MULTIPLIER, (upgrade.count * amount))
+        cost = (POWER_COST_MULTIPLIER * (upgrade.count + amount)) * ((CLICK_BASE_COST * upgrade.power) * amount * (1 - DISCOUNT_PER_TIER * (upgrade.tier - 1)))
     }
 
     return Math.ceil(cost)
@@ -214,6 +213,7 @@ function calcCost(upgrade, amount = 1) {
 function upgradeExists(upgrade) {
     cur_upgrades.forEach((_upgrade) => {
         if (upgrade.name === _upgrade.name) {
+            console.log(`hit: ${_upgrade.name}`)
             return _upgrade
         }
     })
@@ -228,7 +228,7 @@ function buyUpgrade(upgrade, multiplier) {
         for (i = 0; i < multiplier; i++) {
             
             if (upgradeExists(upgrade)) {
-                upgrade.addCount()
+                addCountUpgrade(upgrade)
             } else {
                 cur_upgrades.push(upgrade)
             }
@@ -288,13 +288,15 @@ function main() {
 function loadUpgrades() {
     var upgrades = document.getElementById("upgrades")
     upgrades.innerHTML = '';
-    for (i = 0; i < ALL_UPGRADES.length; i++) {
+    let i = 0
+    ALL_UPGRADES.forEach((_upgrade) => {
         var upgrade = document.createElement("div")
         upgrade.id = "upgrade" + i
-        upgrade.innerHTML = "<p>" + ALL_UPGRADES[i].name + "</p><p>Cost: " + calcCost(ALL_UPGRADES[i]) + "</p>"
+        upgrade.innerHTML = "<p>" + _upgrade.name + "</p><p>Cost: " + calcCost(_upgrade) + "</p>"
         upgrade.onclick = upgradeCallback(i);
         upgrades.appendChild(upgrade)
-    }
+        i++
+    })
 }
 
 function updatePoints() {
@@ -308,11 +310,9 @@ function updatePower() {
     document.getElementById("autoPower").innerHTML = "Auto Power: " + Math.round(autoPower * multiplier)
 }
 
-function addCountUpgrade(upgrade, count) {
-    for (i = 0; i < cur_upgrades.length; i++) {
-        if (upgrade === cur_upgrades[i]) {
-            cur_upgrades[i].addCount(count)
-        }
+function addCountUpgrade(upgrade, count = 1) {
+    if (upgradeExists(upgrade)) {
+        upgradeExists(upgrade).addCount(count)
     }
 }
 
