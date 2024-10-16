@@ -293,7 +293,7 @@ function loadUpgrades() {
         upgrade = document.createElement("div")
         upgrade.id = "upgrade" + i
         for (j = 0; j < cur_upgrades.length; j++) {
-            if (cur_upgrades[j] == ALL_UPGRADES[i]) {
+            if (cur_upgrades[j].name == ALL_UPGRADES[i].name) {
                 upgrade.innerHTML = "<p>" + cur_upgrades[j].name + "</p><p>Cost: " + calcCost(cur_upgrades[j]) + "</p>"
                 _x = true
             }
