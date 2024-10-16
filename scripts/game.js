@@ -218,7 +218,9 @@ function upgradeExists(upgrade) {
 }
 
 function buyUpgrade(upgrade, multiplier) {
-    upgrade = (upgradeExists()) ? upgradeExists() : upgrade 
+    if (upgradeExists(upgrade)) {
+        upgrade = upgradeExists(upgrade)
+    }
     cost = calcCost(upgrade, multiplier)
 
     if (points >= cost) {
