@@ -237,6 +237,7 @@ function buyUpgrade(upgrade, multiplier) {
             points = points - cost
             updatePoints() 
             updatePower()
+            loadUpgrades()
             return true
         }
     }
@@ -282,11 +283,21 @@ function main() {
 }
 
 function loadUpgrades() {
+    let _x = false;
     upgrades = document.getElementById("upgrades")
+    upgrades.innerHTML = '';
     for (i = 0; i < ALL_UPGRADES.length; i++) {
         upgrade = document.createElement("div")
         upgrade.id = "upgrade" + i
-        upgrade.innerHTML = "<p>" + ALL_UPGRADES[i].name + "</p><p>Cost: " + calcCost(ALL_UPGRADES[i]) + "</p>"
+        for (j = 0; j < cur_upgrades.length; j++) {
+            if (cur_upgrades[j] == ALL_UPGRADES[i]) {
+                upgrade.innerHTML = "<p>" + cur_upgrades[j].name + "</p><p>Cost: " + calcCost(cur_upgrades[j]) + "</p>"
+                _x = true
+            }
+        }
+        if (!_x) {
+            upgrade.innerHTML = "<p>" + ALL_UPGRADES[i].name + "</p><p>Cost: " + calcCost(ALL_UPGRADES[i]) + "</p>"
+        }
         upgrade.onclick = upgradeCallback(i);
         upgrades.appendChild(upgrade)
     }
