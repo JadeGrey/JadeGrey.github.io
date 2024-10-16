@@ -149,28 +149,28 @@ const AUTO_BASE_COST = 20.0;
 const DISCOUNT_PER_TIER = 0.02;
 const POWER_COST_MULTIPLIER = 1.05;
 const ALL_UPGRADES = [
-    new Upgrade("Baby Goose", 1, 1, false),
-    new Upgrade("Goose Pen", 1, 1, true),
-    new Upgrade("Young Goose", 2, 5, false),
-    new Upgrade("Goose Pond", 2, 5, true),
-    new Upgrade("Aspiring Goose", 3, 50, false),
-    new Upgrade("Goose Park", 3, 50, true),
-    new Upgrade("Smart Goose", 4, 120, false),
-    new Upgrade("Goose Farm", 4, 120, true),
-    new Upgrade("Adult Goose", 5, 1000, false),
-    new Upgrade("Goose Machine", 5, 2000, true),
-    new Upgrade("CEO Goose", 6, 6500, false),
-    new Upgrade("Goose Industry", 6, 40000, true),
-    new Upgrade("President Goose", 7, 14000, false),
-    new Upgrade("Goose Country", 7, 120000, true),
-    new Upgrade("Leader Goose", 8, 80000, false),
-    new Upgrade("Goose Empire", 8, 300000, true),
-    new Upgrade("Science Goose", 9, 190000, false),
-    new Upgrade("Goose Planet", 9, 1200000, true),
-    new Upgrade("Astronaut Goose", 10, 800000, false),
-    new Upgrade("Goose Galaxy", 10, 8500000, true),
-    new Upgrade("Cosmic Goose", 11, 100000000, false),
-    new Upgrade("Goose Universe", 11, 100000000, true),
+    new Upgrade("Baby Goose", 1, 1, false, 0),
+    new Upgrade("Goose Pen", 1, 1, true, 0),
+    new Upgrade("Young Goose", 2, 5, false, 0),
+    new Upgrade("Goose Pond", 2, 5, true, 0),
+    new Upgrade("Aspiring Goose", 3, 50, false, 0),
+    new Upgrade("Goose Park", 3, 50, true, 0),
+    new Upgrade("Smart Goose", 4, 120, false, 0),
+    new Upgrade("Goose Farm", 4, 120, true, 0),
+    new Upgrade("Adult Goose", 5, 1000, false, 0),
+    new Upgrade("Goose Machine", 5, 2000, true, 0),
+    new Upgrade("CEO Goose", 6, 6500, false, 0),
+    new Upgrade("Goose Industry", 6, 40000, true, 0),
+    new Upgrade("President Goose", 7, 14000, false, 0),
+    new Upgrade("Goose Country", 7, 120000, true, 0),
+    new Upgrade("Leader Goose", 8, 80000, false, 0),
+    new Upgrade("Goose Empire", 8, 300000, true, 0),
+    new Upgrade("Science Goose", 9, 190000, false, 0),
+    new Upgrade("Goose Planet", 9, 1200000, true, 0),
+    new Upgrade("Astronaut Goose", 10, 800000, false, 0),
+    new Upgrade("Goose Galaxy", 10, 8500000, true, 0),
+    new Upgrade("Cosmic Goose", 11, 100000000, false, 0),
+    new Upgrade("Goose Universe", 11, 100000000, true, 0),
 ];
 const MODIFIERS = [
     "multiplier"
@@ -198,9 +198,7 @@ function modifierHandler(modifier, count) {
 }
 
 function calcCost(upgrade, amount = 1) {
-    if (upgradeExists(upgrade)) {
-        upgrade = upgradeExists(upgrade)
-    }
+    upgrade = parseUpgrade(upgrade)
     if (upgrade.auto) {
         cost = (POWER_COST_MULTIPLIER * (upgrade.count + amount)) * ((AUTO_BASE_COST * upgrade.power) * amount * (1 - DISCOUNT_PER_TIER * (upgrade.tier - 1)))
     } else {
@@ -210,26 +208,27 @@ function calcCost(upgrade, amount = 1) {
     return Math.ceil(cost)
 }   
 
-function upgradeExists(upgrade) {
+function parseUpgrade(upgrade) {
     cur_upgrades.forEach((_upgrade) => {
         if (upgrade.name === _upgrade.name) {
-            console.log(`hit: ${_upgrade.name}`)
             return _upgrade
         }
     })
-    return false
+    return upgrade
 }
 
 function buyUpgrade(upgrade, multiplier) {
+    upgrade = parseUpgrade(upgrade)
     cost = calcCost(upgrade, multiplier)
 
     if (points >= cost) {
                
         for (i = 0; i < multiplier; i++) {
             
-            if (upgradeExists(upgrade)) {
-                addCountUpgrade(upgrade)
+            if (upgrade.count > 0) {
+                upgrade.addCount()
             } else {
+                upgrade.count = 1
                 cur_upgrades.push(upgrade)
             }
             if (upgrade.auto) {
@@ -237,12 +236,12 @@ function buyUpgrade(upgrade, multiplier) {
             } else {
                 clickPower += upgrade.power
             }
-            points = points - cost
-            updatePoints() 
-            updatePower()
-            loadUpgrades()
-            return true
         }
+        points = points - cost
+        updatePoints() 
+        updatePower()
+        loadUpgrades()
+        return true
     }
     return false
 }
@@ -310,12 +309,6 @@ function updatePower() {
     document.getElementById("autoPower").innerHTML = "Auto Power: " + Math.round(autoPower * multiplier)
 }
 
-function addCountUpgrade(upgrade, count = 1) {
-    if (upgradeExists(upgrade)) {
-        upgradeExists(upgrade).addCount(count)
-    }
-}
-
 function upgradeCallback(i) {
     return function() {
         buyUpgrade(ALL_UPGRADES[i], 1)
@@ -326,11 +319,11 @@ function canAccend() {
     if (multiplier > 1) {
         return true
     }
-    for (i = 0; i < cur_upgrades.length; i++) {
-        if (cur_upgrades[i].name === "Goose Empire") {
+    cur_upgrades.forEach((_upgrade) => {
+        if (_upgrade.name === "Goose Empire") {
             return true
         }
-    }
+    })
     return false
 }
 
