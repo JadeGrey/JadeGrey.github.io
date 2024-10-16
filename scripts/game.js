@@ -198,6 +198,7 @@ function modifierHandler(modifier, count) {
 }
 
 function calcCost(upgrade, amount = 1) {
+    upgrade = upgradeExists(upgrade)
     if (upgrade.auto) {
         cost = ((AUTO_BASE_COST * upgrade.power) * amount * (1 - DISCOUNT_PER_TIER * (upgrade.tier - 1))) + Math.pow(POWER_COST_MULTIPLIER, (upgrade.count * amount))
     } else {
@@ -209,11 +210,10 @@ function calcCost(upgrade, amount = 1) {
 
 function upgradeExists(upgrade) {
     for (i = 0; i < cur_upgrades.length; i++) {
-        if (upgrade == cur_upgrades[i]) {
+        if (upgrade.name == cur_upgrades[i].name) {
             return cur_upgrades[i]
         }
     }
-
     return upgrade
 }
 
@@ -226,7 +226,7 @@ function buyUpgrade(upgrade, multiplier) {
         for (i = 0; i < multiplier; i++) {
             
             if (upgradeExists(upgrade)) {
-                addCountUpgrade(upgrade)
+                upgrade.addCount()
             } else {
                 cur_upgrades.push(upgrade)
             }
