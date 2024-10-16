@@ -285,11 +285,9 @@ function main() {
 }
 
 function loadUpgrades() {
-    let _x = false;
     upgrades = document.getElementById("upgrades")
     upgrades.innerHTML = '';
     for (i = 0; i < ALL_UPGRADES.length; i++) {
-        _x = false;
         upgrade = document.createElement("div")
         upgrade.id = "upgrade" + i
         upgrade.innerHTML = "<p>" + ALL_UPGRADES[i].name + "</p><p>Cost: " + calcCost(ALL_UPGRADES[i]) + "</p>"
