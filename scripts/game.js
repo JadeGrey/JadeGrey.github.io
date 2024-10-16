@@ -214,11 +214,11 @@ function upgradeExists(upgrade) {
             return cur_upgrades[i]
         }
     }
-    return upgrade
+    return false
 }
 
 function buyUpgrade(upgrade, multiplier) {
-    upgrade = upgradeExists(upgrade)
+    upgrade = (upgradeExists()) ? upgradeExists() : upgrade 
     cost = calcCost(upgrade, multiplier)
 
     if (points >= cost) {
