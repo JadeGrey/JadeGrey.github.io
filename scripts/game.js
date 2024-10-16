@@ -198,7 +198,6 @@ function modifierHandler(modifier, count) {
 }
 
 function calcCost(upgrade, amount = 1) {
-    upgrade = upgradeExists(upgrade)
     if (upgrade.auto) {
         cost = ((AUTO_BASE_COST * upgrade.power) * amount * (1 - DISCOUNT_PER_TIER * (upgrade.tier - 1))) + Math.pow(POWER_COST_MULTIPLIER, (upgrade.count * amount))
     } else {
