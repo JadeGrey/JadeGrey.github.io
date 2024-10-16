@@ -144,10 +144,10 @@ class Progress {
 }
 
 const FPS = 30
-const CLICK_BASE_COST = 50.0;
-const AUTO_BASE_COST = 75.0;
+const CLICK_BASE_COST = 15.0;
+const AUTO_BASE_COST = 20.0;
 const DISCOUNT_PER_TIER = 0.02;
-const POWER_COST_MULTIPLIER = 2.0;
+const POWER_COST_MULTIPLIER = 1.1;
 const ALL_UPGRADES = [
     new Upgrade("Baby Goose", 1, 1, false),
     new Upgrade("Goose Pen", 1, 1, true),
@@ -197,11 +197,11 @@ function modifierHandler(modifier, count) {
     }
 }
 
-function calcCost(upgrade) {
+function calcCost(upgrade, amount = 1) {
     if (upgrade.auto) {
-        cost = (AUTO_BASE_COST * (upgrade.power * POWER_COST_MULTIPLIER)) * (1 - DISCOUNT_PER_TIER * (upgrade.tier - 1))
+        cost = ((AUTO_BASE_COST * upgrade.power) * amount * (1 - DISCOUNT_PER_TIER * (upgrade.tier - 1))) + (POWER_COST_MULTIPLIER * (upgrade.count ** amount))
     } else {
-    cost = (CLICK_BASE_COST * (upgrade.power * POWER_COST_MULTIPLIER)) * (1 - DISCOUNT_PER_TIER * (upgrade.tier - 1))
+        cost = ((CLICK_BASE_COST * upgrade.power) * amount * (1 - DISCOUNT_PER_TIER * (upgrade.tier - 1))) + (POWER_COST_MULTIPLIER * (upgrade.count ** amount))
     }
 
     return Math.round(cost)
@@ -218,15 +218,12 @@ function upgradeExists(upgrade) {
 }
 
 function buyUpgrade(upgrade, multiplier) {
-    cost = calcCost(upgrade) * multiplier
+    cost = calcCost(upgrade, multiplier)
     if (points >= cost) {
-        
-        points = points - cost
-        updatePoints()        
+               
         for (i = 0; i < multiplier; i++) {
             
             if (upgradeExists(upgrade)) {
-                console.log('exist')
                 addCountUpgrade(upgrade)
             } else {
                 console.log('app')
@@ -237,6 +234,8 @@ function buyUpgrade(upgrade, multiplier) {
             } else {
                 clickPower += upgrade.power
             }
+            points = points - cost
+            updatePoints() 
             updatePower()
             return true
         }
