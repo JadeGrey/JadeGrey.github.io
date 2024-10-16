@@ -252,7 +252,7 @@ function handleSecond() {
     handleAutoClick()
     progress.save()
     if (canAccend() && !document.getElementById('Accend')) {
-        buttons = document.getElementById("buttons")
+        buttons = document.getElementById("options")
         buttons.innerHTML += '<input type="button" onclick="accend()" value="Accend" id="Accend">'
     }
 }

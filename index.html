@@ -1,25 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Goose Game</title>
     <link rel="stylesheet" href="/styles/main.css">
 </head>
+
 <body>
     <p id="points">Points: N</p>
     <p id="clickPower">Click Power: N</p>
     <p id="autoPower">Auto Power: N</p>
-    <div class="btn-menu" id="buttons">
-    <input type="button" onclick='progress.save()' value="Save">
-    <input type="button" onclick='progress.load()' value="Load">
-    <input type="button" onclick='progress.reset()' value="Reset">
-    <input type="button" onclick='progress.import(prompt("Enter save data."))' value="Import">
-    <input type="button" onclick='prompt("Copy text below!", progress.export())' value="Export">
-
-    <input id="click" type="button" onclick='handleClick()' value="Click">
+    <div class='click-element'>
+        <input id="click" type="button" onclick='handleClick()' value="Click">
+    </div>
+    <div class='options-tab'>
+        <p class='options-header'>Options</p>
+        <div class='options' id="options">
+            <input type="button" onclick='progress.save()' value="Save">
+            <input type="button" onclick='progress.load()' value="Load">
+            <input type="button" onclick='progress.reset()' value="Reset">
+            <input type="button" onclick='progress.import(prompt("Enter save data."))' value="Import">
+            <input type="button" onclick='prompt("Copy text below!", progress.export())' value="Export">
+        </div>
     </div>
     <div class="upgrades-container" id="upgrades"></div>
     <script src="/scripts/game.js"></script>
 </body>
+
 </html>

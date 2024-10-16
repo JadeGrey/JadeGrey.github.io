@@ -4,11 +4,22 @@ html {
 }
 
 body {
-    background-image: url('/assets/bkg.jpg');
+    background-image:
+        url('https://github.com/JadeGrey/JadeGrey.github.io/blob/main/assets/bkg.jpg?raw=true');
+}
+
+.click-element {
+    padding: 1rem;
+}
+
+.click-element input {
+    width: 30vw;
+    height: 30vh;
 }
 
 .upgrades-container {
     position: fixed;
+    top: 30%;
     right: 1%;
     right: 1vw;
     width: 25%;
@@ -21,7 +32,7 @@ body {
     border: 1rem;
     border-style: double;
     border-color: black;
-    overflow-y: auto;
+    overflow-y: scroll;
 }
 
 .upgrade-element {
@@ -42,6 +53,34 @@ body {
     font-size: 2vw;
 }
 
-.btn-menu {
-    padding: 1rem;
+.options-tab {
+    position: fixed;
+    top: 3%;
+    right: 1%;
+    width: 33.34%;
+    height: 20%;
+    border: 1rem;
+    border-style: solid;
+}
+
+.options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: between;
+}
+
+.options input {
+    margin: 0.43rem;
+
+}
+
+.options-header {
+    text-align: center;
+    font-size: 3.33vh;
+    margin: auto;
+    padding: 0.2rem;
+    border: 0;
+    border-bottom: 0.4rem;
+    border-style: solid;
+    border-color: black;
 }
