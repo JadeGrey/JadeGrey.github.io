@@ -204,7 +204,7 @@ function calcCost(upgrade, amount = 1) {
         cost = ((CLICK_BASE_COST * upgrade.power) * amount * (1 - DISCOUNT_PER_TIER * (upgrade.tier - 1))) + Math.pow(POWER_COST_MULTIPLIER, (upgrade.count * amount))
     }
 
-    return Math.round(cost)
+    return Math.ciel(cost)
 }   
 
 function upgradeExists(upgrade) {
