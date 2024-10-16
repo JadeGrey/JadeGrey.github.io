@@ -288,7 +288,7 @@ function loadUpgrades() {
     let upgrades = document.getElementById("upgrades")
     upgrades.innerHTML = '';
     for (i = 0; i < ALL_UPGRADES.length; i++) {
-        upgrade = document.createElement("div")
+        let upgrade = document.createElement("div")
         upgrade.id = "upgrade" + i
         upgrade.innerHTML = "<p>" + ALL_UPGRADES[i].name + "</p><p>Cost: " + calcCost(ALL_UPGRADES[i]) + "</p>"
         upgrade.onclick = upgradeCallback(i);
