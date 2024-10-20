@@ -20,6 +20,10 @@ class Upgrade {
     addCount(count = 1) {
         this.count += count;
     }
+
+    static fromObject(obj) {
+        return new Upgrade(obj.name, obj.tier, obj.power, obj.auto, obj.count)
+    }
 }
 
 class DustUpgrade {
@@ -81,7 +85,7 @@ class Progress {
         totalPoints = this.totalPoints
         points = this.points
         multiplier = this.multiplier
-        cur_upgrades = this.upgrades
+        cur_upgrades = this.upgrades.map(Upgrade.fromObject)
         dust = this.dust
         progress = this
         updatePoints()
@@ -198,27 +202,27 @@ function modifierHandler(modifier, count) {
 }
 
 function calcCost(upgrade, amount = 1) {
-    upgrade = parseUpgrade(upgrade)
     if (upgrade.auto) {
-        cost = (POWER_COST_MULTIPLIER * (upgrade.count + amount)) * ((AUTO_BASE_COST * upgrade.power) * amount * (1 - DISCOUNT_PER_TIER * (upgrade.tier - 1)))
+        cost = (AUTO_BASE_COST * upgrade.power) * (POWER_COST_MULTIPLIER ** (upgrade.count * amount)) * (1 - (DISCOUNT_PER_TIER * (upgrade.tier - 1)))
     } else {
-        cost = (POWER_COST_MULTIPLIER * (upgrade.count + amount)) * ((CLICK_BASE_COST * upgrade.power) * amount * (1 - DISCOUNT_PER_TIER * (upgrade.tier - 1)))
+        cost = (CLICK_BASE_COST * upgrade.power) * (POWER_COST_MULTIPLIER ** (upgrade.count * amount)) * (1 - (DISCOUNT_PER_TIER * (upgrade.tier - 1)))
     }
 
     return Math.ceil(cost)
 }   
 
 function parseUpgrade(upgrade) {
-    cur_upgrades.forEach((_upgrade) => {
+    for (let _upgrade of cur_upgrades) {
+        console.log(`B: ${upgrade.name} | A: ${_upgrade.name}`)
         if (upgrade.name === _upgrade.name) {
+            console.log(_upgrade)
             return _upgrade
         }
-    })
+    }
     return upgrade
 }
 
 function buyUpgrade(upgrade, multiplier) {
-    upgrade = parseUpgrade(upgrade)
     cost = calcCost(upgrade, multiplier)
 
     if (points >= cost) {
@@ -288,14 +292,17 @@ function loadUpgrades() {
     var upgrades = document.getElementById("upgrades")
     upgrades.innerHTML = '';
     let i = 0
-    ALL_UPGRADES.forEach((_upgrade) => {
+    for (let _upgrade of ALL_UPGRADES) {
+        _upgrade = parseUpgrade(_upgrade)
+        console.log(_upgrade)
+        console.log(`${_upgrade.name} | Count: ${_upgrade.count}`)
         var upgrade = document.createElement("div")
         upgrade.id = "upgrade" + i
         upgrade.innerHTML = "<p>" + _upgrade.name + "</p><p>Cost: " + calcCost(_upgrade) + "</p>"
-        upgrade.onclick = upgradeCallback(i);
+        upgrade.onclick = upgradeCallback(_upgrade);
         upgrades.appendChild(upgrade)
         i++
-    })
+    }
 }
 
 function updatePoints() {
@@ -309,9 +316,9 @@ function updatePower() {
     document.getElementById("autoPower").innerHTML = "Auto Power: " + Math.round(autoPower * multiplier)
 }
 
-function upgradeCallback(i) {
+function upgradeCallback(upgrade) {
     return function() {
-        buyUpgrade(ALL_UPGRADES[i], 1)
+        buyUpgrade(upgrade, 1)
     }
 }
 
