@@ -121,6 +121,8 @@ class Progress {
         this.import(btoa(JSON.stringify(new Progress(1, 0, 0, 0, 1, [], 0))))
         updatePoints()
         updatePower()
+        loadUpgrades()
+        document.getElementById('Accend').remove()
     }
 
     import(value, dump=true) {
