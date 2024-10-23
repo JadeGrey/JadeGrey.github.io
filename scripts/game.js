@@ -148,10 +148,10 @@ class Progress {
 }
 
 const FPS = 30
-const CLICK_BASE_COST = 15.0;
-const AUTO_BASE_COST = 20.0;
+const CLICK_BASE_COST = 75.0;
+const AUTO_BASE_COST = 100.0;
 const DISCOUNT_PER_TIER = 0.02;
-const POWER_COST_MULTIPLIER = 1.05;
+const POWER_COST_MULTIPLIER = 1.15;
 const ALL_UPGRADES = [
     new Upgrade("Baby Goose", 1, 1, false, 0),
     new Upgrade("Goose Pen", 1, 1, true, 0),
