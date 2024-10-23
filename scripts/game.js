@@ -326,11 +326,11 @@ function canAccend() {
     if (multiplier > 1) {
         return true
     }
-    cur_upgrades.forEach((_upgrade) => {
-        if (_upgrade.name === "Goose Empire") {
+    for (let _upgrade of cur_upgrades) {
+        if (_upgrade.name == "Goose Empire") {
             return true
         }
-    })
+    }
     return false
 }
 
